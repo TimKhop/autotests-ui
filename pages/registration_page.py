@@ -16,7 +16,7 @@ class RegistrationPage(BasePage):
         self.email_input.fill(email)
         expect(self.email_input).to_have_value(email)
 
-        self.username_input.fill(email)
+        self.username_input.fill(username)
         expect(self.username_input).to_have_value(username)
 
         self.password_input.fill(password)
