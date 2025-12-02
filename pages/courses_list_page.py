@@ -44,7 +44,7 @@ class CoursesListPage(BasePage):
     def click_create_course_button(self):
         expect(self.create_course_button).to_be_visible()
 
-    def check_visible_course_cart(
+    def check_visible_course_card(
             self,
             index: int,
             title: str,
