@@ -27,7 +27,6 @@ def test_empty_courses_list(chromium_page_with_state: Page):
 @pytest.mark.courses
 @pytest.mark.regression
 def test_create_course(
-        chromium_page_with_state: Page,
         create_course_page: CreateCoursePage,
         courses_list_page: CoursesListPage
 ):
