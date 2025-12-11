@@ -13,4 +13,4 @@ class TextArea(BaseElement):
 
     def check_have_value(self, value: str, nth: int = 0, **kwargs):
         locator = self.get_locator(nth, **kwargs)
-        expect(locator).to.have.value(value)
+        expect(locator).to_have_value(value)
