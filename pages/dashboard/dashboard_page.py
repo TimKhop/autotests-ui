@@ -18,7 +18,7 @@ class DashboardPage(BasePage):
         self.students_chart_view = ChartViewComponent(page, "students", "bar")
         self.activities_chart_view = ChartViewComponent(page, "activities", "line")
 
-        self.title = DashboardToolbarViewComponent(page)
+        self.dashboard_toolbar_view = DashboardToolbarViewComponent(page)
 
     def check_visible_students_chart(self):
         self.students_chart_view.check_visible('Students')
