@@ -2,11 +2,22 @@ import pytest
 import re as re
 from pages.courses.courses_list_page import CoursesListPage
 from pages.courses.create_course_page import CreateCoursePage
-
+import allure
+from tools.allure.tags import AllureTag
+from tools.allure.epics import AllureEpic
+from tools.allure.features import AllureFeature
+from tools.allure.stories import AllureStory
+from allure_commons.types import Severity
 
 @pytest.mark.courses
 @pytest.mark.regression
+@allure.tag(AllureTag.REGISTRATION, AllureTag.COURSES)
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeature.COURSES)
+@allure.story(AllureStory.COURSES)
 class TestCourse:
+    @allure.title("Check displaying of empty course list")
+    @allure.severity(Severity.NORMAL)
     def test_empty_courses_list(self, courses_list_page: CoursesListPage):
         courses_list_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
         courses_list_page.check_visible_empty_view()
@@ -14,6 +25,8 @@ class TestCourse:
         courses_list_page.sidebar.check_visible()
         courses_list_page.navbar.check_visible('username')
 
+    @allure.title("Create course")
+    @allure.severity(Severity.CRITICAL)
     def test_create_course(self,
             create_course_page: CreateCoursePage,
             courses_list_page: CoursesListPage
