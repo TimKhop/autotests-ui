@@ -1,3 +1,5 @@
+import allure
+
 from components.base_component import BaseComponent
 import re
 from playwright.sync_api import Page
@@ -15,6 +17,7 @@ class CoursesListToolbarComponent(BaseComponent):
             page, 'courses-list-toolbar-create-course-button', 'Create Course'
         )
 
+    @allure.step("Check visible course list toolbar view")
     def check_visible(self):
         self.title.check_visible()
         self.title.check_have_text('Courses')
