@@ -1,22 +1,16 @@
 import pytest
 from playwright.sync_api import Page, Playwright
-import allure
 from pages.authentication.registration_page import RegistrationPage
 
 from _pytest.fixtures import SubRequest
 
+from tools.playwright.pages import initialize_playwright_page
+
+
 @pytest.fixture()
 def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+    yield from initialize_playwright_page(playwright, test_name=request.node.name)
 
-    yield context.new_page()
-
-    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
-    browser.close()
-
-    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
 
 @pytest.fixture(scope='session')
 def initialize_browser_state(playwright: Playwright):
@@ -35,14 +29,8 @@ def initialize_browser_state(playwright: Playwright):
 
 @pytest.fixture
 def chromium_page_with_state(request: SubRequest, initialize_browser_state, playwright: Playwright) -> Page:
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context(storage_state='browser-state.json')
-    context.tracing.start(screenshots=True, snapshots=True, sources=True)
-
-    page = context.new_page()
-    yield page
-
-    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
-    browser.close()
-
-    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
+    yield from initialize_playwright_page(
+        playwright,
+        test_name=request.node.name,
+        storage_state='browser-state.json'
+    )
